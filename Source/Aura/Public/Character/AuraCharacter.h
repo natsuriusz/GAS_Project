@@ -13,6 +13,15 @@ UCLASS()
 class AURA_API AAuraCharacter : public AAuraCharacterBase
 {
 	GENERATED_BODY()
+	AAuraCharacter();
+
+public:
+private:
+protected:
+	UPROPERTY(EditAnywhere)
+	class USpringArmComponent* CameraBoom;
+	UPROPERTY(EditAnywhere)
+	class UCameraComponent* Cam;
 	
 };
 
