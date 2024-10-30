@@ -19,3 +19,11 @@ void AAuraCharacterBase::BeginPlay()
 	
 }
 
+void AAuraCharacterBase::HighlightActor()
+{
+}
+
+void AAuraCharacterBase::UnHighlightActor()
+{
+}
+
