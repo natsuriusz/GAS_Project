@@ -20,16 +20,9 @@ void AAuraCharacterBase::BeginPlay()
 	
 }
 
-void AAuraCharacterBase::HighlightActor()
+UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 {
-
+	return AbilitySystemComponent;
 }
 
-void AAuraCharacterBase::UnHighlightActor()
-{
-	GetMesh()->SetRenderCustomDepth(false);
-	GetMesh()->SetCustomDepthStencilValue(0);
-	Weapon->SetRenderCustomDepth(false);
-	Weapon->SetCustomDepthStencilValue(0);
-}
 
