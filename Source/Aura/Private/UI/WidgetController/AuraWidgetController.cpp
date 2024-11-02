@@ -8,6 +8,10 @@ void UAuraWidgetController::BroadcastInitialValues()
 	
 }
 
+void UAuraWidgetController::BindCallbacksToDependencies()
+{
+}
+
 void UAuraWidgetController::SetWidgetControllerParams(const FWidgetControllerParams& WidgetControllerParams)
 {
 
