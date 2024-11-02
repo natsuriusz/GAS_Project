@@ -1,7 +1,7 @@
 // Guided project nr 2
 
 
-#include "UI/AuraWidgetController.h"
+#include "UI/WidgetController/AuraWidgetController.h"
 
 void UAuraWidgetController::SetWidgetControllerParams(const FWidgetControllerParams& WidgetControllerParams)
 {
