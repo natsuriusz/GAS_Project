@@ -22,10 +22,13 @@ protected:
 	virtual void BeginPlay() override;
 	
 	UFUNCTION(BlueprintCallable, Category = "Applied Effect")
-	void ApplyEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GamplayEffectClass);
+	void ApplyEffectToTarget(AActor* Target, TSubclassOf<UGameplayEffect> GameplayEffectClass);
 	
-	UPROPERTY(EditAnywhere, Category = "Applied Effect")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effect")
 	TSubclassOf<UGameplayEffect> InstantGameplayEffectClass;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effect")
+	TSubclassOf<UGameplayEffect> DurationGameplayEffectClass;
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
