@@ -9,6 +9,7 @@
 
 class UAuraUserWidget;
 struct FOnAttributeChangeData;
+class UDataTable;
 
 USTRUCT(BlueprintType)
 struct FUIWidgetRow : public FTableRowBase
@@ -33,6 +34,7 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChangedSignature, float, Ne
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxHealthChangedSignature, float, NewMaxHealth);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnManaChangedSignature, float, NewMana);
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnMaxManaChangedSignature, float, NewMaxMana);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FMessageWidgetRowSignature, FUIWidgetRow, Row);
 /**
  * 
  */
@@ -58,7 +60,8 @@ public:
 	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
 	FOnHealthChangedSignature OnMaxManaChanged;
 
-	
+	UPROPERTY(BlueprintAssignable, Category="GAS|Attributes")
+	FMessageWidgetRowSignature MessageWidgetRowDelegate;
 	
 	void HealthChanged(const FOnAttributeChangeData& Data) const;
 	void MaxHealthChanged(const FOnAttributeChangeData& Data) const;
@@ -68,4 +71,14 @@ public:
 	protected:
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Widget Data")
 	TObjectPtr<UDataTable> MessageDataTable;
+
+	template<typename T>
+	T* GetDataTableByRowTag(UDataTable* DataTable, const FGameplayTag& Tag);
 };
+
+template <typename T>
+T* UAuraOverlayController::GetDataTableByRowTag(UDataTable* DataTable, const FGameplayTag& Tag)
+{
+	T* Row = DataTable->FindRow<T>(Tag.GetTagName(), TEXT(""));
+	return Row;
+}
