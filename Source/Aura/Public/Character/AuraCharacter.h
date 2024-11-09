@@ -28,7 +28,7 @@ public:
 	virtual void PossessedBy(AController* NewController) override;
 
 private:
-	void InitAbilityActorInfo();
+	virtual void InitAbilityActorInfo() override;
 protected:
 	UPROPERTY(EditAnywhere)
 	class USpringArmComponent* CameraBoom;
