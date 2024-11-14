@@ -1,12 +1,11 @@
 // Guided project nr 2
 
-
 #include "AbilitySystem/AuraAttributeSet.h"
-#include "AbilitySystemComponent.h"
 #include "AbilitySystemBlueprintLibrary.h"
 #include "GameFramework/Character.h"
 #include "GameplayEffectExtension.h"
 #include "Net/UnrealNetwork.h"
+
 
 UAuraAttributeSet::UAuraAttributeSet()
 {
