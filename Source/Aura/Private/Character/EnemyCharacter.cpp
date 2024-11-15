@@ -35,6 +35,11 @@ void AEnemyCharacter::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
+int32 AEnemyCharacter::GetPlayerLevel()
+{
+	return Level;
+}
+
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();

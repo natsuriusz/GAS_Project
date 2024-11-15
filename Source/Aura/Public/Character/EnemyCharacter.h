@@ -20,7 +20,7 @@ public:
 	virtual void HighlightActor() override;
 	virtual void UnHighlightActor() override;
 	virtual void Tick(float DeltaSeconds) override;
-
+	virtual int32 GetPlayerLevel() override;
 protected:
 	virtual void BeginPlay() override;
 	
