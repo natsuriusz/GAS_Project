@@ -24,11 +24,11 @@ protected:
 
 public:
 	virtual void OnRep_PlayerState() override;
-
+	virtual int32 GetPlayerLevel() override;
 	virtual void PossessedBy(AController* NewController) override;
 
 private:
-	void InitAbilityActorInfo();
+	virtual void InitAbilityActorInfo() override;
 protected:
 	UPROPERTY(EditAnywhere)
 	class USpringArmComponent* CameraBoom;

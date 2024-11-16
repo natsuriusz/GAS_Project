@@ -35,8 +35,20 @@ void AEnemyCharacter::Tick(float DeltaSeconds)
 	Super::Tick(DeltaSeconds);
 }
 
+int32 AEnemyCharacter::GetPlayerLevel()
+{
+	return Level;
+}
+
 void AEnemyCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+	InitAbilityActorInfo();
+
+}
+
+void AEnemyCharacter::InitAbilityActorInfo()
+{
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
+	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorSet();
 }
