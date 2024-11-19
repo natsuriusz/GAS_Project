@@ -2,11 +2,10 @@
 
 
 #include "AuraGameplayTags.h"
+#include "GameplayTagsManager.h"
+FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 
-AuraGameplayTags::AuraGameplayTags()
+void FAuraGameplayTags::InitializeNativeGameplayTags()
 {
-}
-
-AuraGameplayTags::~AuraGameplayTags()
-{
+	UGameplayTagsManager::Get().AddNativeGameplayTag(FName("Attributes.Secondary.Armor"), FString("Reduces damage taken"));
 }
