@@ -61,4 +61,13 @@ void AAuraCharacterBase::InitializeVitalAttributes() const
 	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToTarget(*SpecHandle.Data.Get(), GetAbilitySystemComponent());
 }
 
+void AAuraCharacterBase::AddCharacterAbilities()
+{
+	if (!HasAuthority()) return;
+
+	
+
+	
+}
+
 
