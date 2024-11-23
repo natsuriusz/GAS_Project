@@ -54,7 +54,7 @@ private:
 
 	FVector CachedDestination = FVector::ZeroVector;
 	float FollowTime = 0;
-	float ShortPressedThreshold = 0.5f;
+	float ShortPressThreshold = 0.5f;
 	bool bAutoRunning = false;
 	UPROPERTY(EditDefaultsOnly, Category = "Click Movement")
 	float AutoRunAcceptanceRadius = 50.f;
