@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "Components/SplineComponent.h"
 #include "GameFramework/PlayerController.h"
 #include "AuraPlayerController.generated.h"
 
@@ -12,6 +13,8 @@ class UInputAction;
 struct FInputActionValue;
 class IEnemyInterface;
 struct FGameplayTag;
+class UAuraAbilitySystemComponent;
+
 /**
  * 
  */
@@ -44,6 +47,23 @@ private:
 	
 	TScriptInterface<IEnemyInterface> LastActor;
 	TScriptInterface<IEnemyInterface> ThisActor;
+
+	UPROPERTY()
+	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
+	UAuraAbilitySystemComponent* GetASC();
+
+	FVector CachedDestination = FVector::ZeroVector;
+	float FollowTime = 0;
+	float ShortPressedThreshold = 0.5f;
+	bool bAutoRunning = false;
+	UPROPERTY(EditDefaultsOnly, Category = "Click Movement")
+	float AutoRunAcceptanceRadius = 50.f;
+	bool bTargeting = false;
+	
+	UPROPERTY(EditAnywhere, Category = "Click Movement")
+	TObjectPtr<USplineComponent> Spline;
+	
+	
 	
 public:
 	virtual void PlayerTick(float DeltaTime) override;
