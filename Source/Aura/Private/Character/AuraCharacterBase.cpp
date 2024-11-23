@@ -3,6 +3,7 @@
 
 #include "Character/AuraCharacterBase.h"
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/AuraAbilitySystemComponent.h"
 
 
 // Sets default values
@@ -65,7 +66,8 @@ void AAuraCharacterBase::AddCharacterAbilities()
 {
 	if (!HasAuthority()) return;
 
-	
+	UAuraAbilitySystemComponent* AuraASC = CastChecked<UAuraAbilitySystemComponent>(AbilitySystemComponent);
+	AuraASC->AddCharacterAbilities(StartupAbilities);
 
 	
 }
