@@ -6,13 +6,9 @@
 #include "Actor/AuraProjectile.h"
 #include "Interaction/CombatInterface.h"
 
-void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
-                                           const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
-                                           const FGameplayEventData* TriggerEventData)
+void UAuraProjectileSpell::SpawnProjectile()
 {
-	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
-
-	bool const bIsServer =  HasAuthority(&ActivationInfo);
+	const bool bIsServer =  GetAvatarActorFromActorInfo()->HasAuthority();
 
 	if (!bIsServer) return;
 	
@@ -23,7 +19,7 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 	{
 		FTransform SpawnTransform;
 
-		 SpawnTransform.SetLocation(CombatInterface->GetCombatSocketLocation());
+		SpawnTransform.SetLocation(CombatInterface->GetCombatSocketLocation());
 
 		AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(ProjectileClass,
 	SpawnTransform,
@@ -33,8 +29,12 @@ void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Hand
 
 		Projectile->FinishSpawning(SpawnTransform);
 	}
-	
+}
 
-	
+void UAuraProjectileSpell::ActivateAbility(const FGameplayAbilitySpecHandle Handle,
+                                           const FGameplayAbilityActorInfo* ActorInfo, const FGameplayAbilityActivationInfo ActivationInfo,
+                                           const FGameplayEventData* TriggerEventData)
+{
+	Super::ActivateAbility(Handle, ActorInfo, ActivationInfo, TriggerEventData);
 	
 }
