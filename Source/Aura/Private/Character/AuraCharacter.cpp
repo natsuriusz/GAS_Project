@@ -93,3 +93,8 @@ void AAuraCharacter::PossessedBy(AController* NewController)
 	AddCharacterAbilities();
 	
 }
+
+FVector AAuraCharacter::GetCombatSocketLocation()
+{
+	return Weapon->GetSocketLocation(FName("CombatSocket"));
+}
