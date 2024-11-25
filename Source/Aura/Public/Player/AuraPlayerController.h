@@ -44,9 +44,9 @@ private:
 	void Move (const FInputActionValue& InputActionValue);
 
 	void CursorTrace();
-	
-	TScriptInterface<IEnemyInterface> LastActor;
-	TScriptInterface<IEnemyInterface> ThisActor;
+	FHitResult CursorHit;
+	IEnemyInterface* LastActor;
+	IEnemyInterface* ThisActor;
 
 	UPROPERTY()
 	TObjectPtr<UAuraAbilitySystemComponent> AuraAbilitySystemComponent;
@@ -62,7 +62,8 @@ private:
 	
 	UPROPERTY(EditAnywhere, Category = "Click Movement")
 	TObjectPtr<USplineComponent> Spline;
-	
+
+	void Autorun();
 	
 	
 public:
