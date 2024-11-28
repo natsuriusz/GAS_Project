@@ -27,6 +27,8 @@ protected:
 	virtual void InitAbilityActorInfo() override;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level")
 	int32 Level = 1;
+
+	float Again = 0.f;
 private:
 	
 };

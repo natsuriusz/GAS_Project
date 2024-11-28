@@ -3,12 +3,15 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayEffect.h"
+#include "GameplayEffectTypes.h"
 #include "GameFramework/Actor.h"
 #include "AuraProjectile.generated.h"
 
 class UProjectileMovementComponent;
 class USphereComponent;
 class UNiagaraSystem;
+struct FGameplayEffectSpecHandle;
 UCLASS()
 class AURA_API AAuraProjectile : public AActor
 {
@@ -20,12 +23,16 @@ public:
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
+
+	UPROPERTY(EditAnywhere)
+	FGameplayEffectSpecHandle DamageEffectSpecHandle;
 protected:
 
 	UFUNCTION()
 	void OnBeginOverlap(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 	virtual void BeginPlay() override;
+
 
 private:
 

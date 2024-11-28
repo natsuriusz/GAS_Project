@@ -3,6 +3,7 @@
 
 #include "Character/EnemyCharacter.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
+#include "AbilitySystem/AuraAttributeSet.h"
 #include "Aura/Aura.h"
 
 AEnemyCharacter::AEnemyCharacter()
@@ -11,7 +12,7 @@ AEnemyCharacter::AEnemyCharacter()
 	AbilitySystemComponent = CreateDefaultSubobject<UAuraAbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
-	AttributeSet = CreateDefaultSubobject<UAttributeSet>("AttributeSet");
+	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
 }
 
 void AEnemyCharacter::HighlightActor()
@@ -33,6 +34,8 @@ void AEnemyCharacter::UnHighlightActor()
 void AEnemyCharacter::Tick(float DeltaSeconds)
 {
 	Super::Tick(DeltaSeconds);
+
+	
 }
 
 int32 AEnemyCharacter::GetPlayerLevel()
@@ -45,10 +48,12 @@ void AEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 	InitAbilityActorInfo();
 
+	
 }
 
 void AEnemyCharacter::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorSet();
+	InitializeDefaultAttributes();
 }
