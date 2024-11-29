@@ -3,10 +3,12 @@
 
 #include "AbilitySystem/Abilities/AuraProjectileSpell.h"
 
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "Actor/AuraProjectile.h"
 #include "Interaction/CombatInterface.h"
 
-void UAuraProjectileSpell::SpawnProjectile()
+void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocation)
 {
 	const bool bIsServer =  GetAvatarActorFromActorInfo()->HasAuthority();
 
@@ -14,19 +16,29 @@ void UAuraProjectileSpell::SpawnProjectile()
 	
 
 	ICombatInterface* CombatInterface = Cast<ICombatInterface>(GetAvatarActorFromActorInfo());
+	
 
 	if (CombatInterface)
 	{
 		FTransform SpawnTransform;
+		const FVector SocketLocation = CombatInterface->GetCombatSocketLocation();
 
-		SpawnTransform.SetLocation(CombatInterface->GetCombatSocketLocation());
-
+		SpawnTransform.SetLocation(SocketLocation);
+		FRotator ProjectileRotation = (ProjectileTargetLocation - SocketLocation).Rotation();
+		ProjectileRotation.Pitch = 0.f;
+		SpawnTransform.SetRotation(ProjectileRotation.Quaternion());
+		
 		AAuraProjectile* Projectile = GetWorld()->SpawnActorDeferred<AAuraProjectile>(ProjectileClass,
 	SpawnTransform,
 	GetOwningActorFromActorInfo(),
 	Cast<APawn>(GetOwningActorFromActorInfo()),
 	ESpawnActorCollisionHandlingMethod::AlwaysSpawn);
 
+		const UAbilitySystemComponent* SourceASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetAvatarActorFromActorInfo());
+		const FGameplayEffectSpecHandle SpecHandle = SourceASC->MakeOutgoingSpec(DamageEffectClass, GetAbilityLevel(), SourceASC->MakeEffectContext());
+
+		Projectile->DamageEffectSpecHandle = SpecHandle;
+		
 		Projectile->FinishSpawning(SpawnTransform);
 	}
 }
