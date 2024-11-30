@@ -61,7 +61,23 @@ protected:
 	virtual void AddCharacterAbilities();
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
 	virtual void InitializeDefaultAttributes() const;
+	//Dissolve FX
 
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> Mesh_DissolveMaterialInstance;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<UMaterialInstance> Weapon_DissolveMaterialInstance;
+
+	UFUNCTION(BlueprintCallable)
+	void Dissolve();
+
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StartDissolveTimeLine(UMaterialInstanceDynamic* MaterialInstanceDynamic);
+	
+	UFUNCTION(BlueprintImplementableEvent, BlueprintCallable)
+	void StartWeaponDissolveTimeLine(UMaterialInstanceDynamic* MaterialInstanceDynamic);
+	
 private:
 	virtual void InitAbilityActorInfo();
 
