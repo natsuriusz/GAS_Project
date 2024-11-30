@@ -43,6 +43,11 @@ public:
  FGameplayTag InputTag_3;
  FGameplayTag InputTag_4;
 
+ //Damage Tag
+ FGameplayTag Damage;
+
+ //HitReacts
+FGameplayTag Effects_HitReact;
 protected:
 
 private:
