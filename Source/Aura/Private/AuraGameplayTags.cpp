@@ -88,4 +88,16 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 		FName("InputTag.4"),
 		FString("Input Tag for 4 key")
 		);
+
+	//Damage
+
+	GameplayTags.Damage= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Damage"),
+	FString("Damage to target")
+	);
+
+	GameplayTags.Effects_HitReact= UGameplayTagsManager::Get().AddNativeGameplayTag(
+FName("Effects.HitReact"),
+FString("Granted this tag, actor will react to hit. If the damage wasn't done, this tag won't be granted")
+);
 }

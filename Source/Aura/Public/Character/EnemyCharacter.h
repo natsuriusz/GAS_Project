@@ -6,6 +6,7 @@
 #include "Character/AuraCharacterBase.h"
 #include "Interaction/EnemyInterface.h"
 #include "UI/WidgetController/AuraOverlayController.h"
+#include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "EnemyCharacter.generated.h"
 
 /**
@@ -28,15 +29,28 @@ public:
 	FOnAttributeChangedSignature OnHealthChanged;
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChangedSignature OnMaxHealthChanged;
+
+	void HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount);
+
+	UPROPERTY(BlueprintReadWrite, Category="Combat")
+	bool bHitReacting = false;
+
+	UPROPERTY(BlueprintReadWrite, Category="Combat")
+	float BaseWalkSpeed = 250.f;
 	
 protected:
 	virtual void BeginPlay() override;
-	
+	virtual void Die() override;
 	virtual void InitAbilityActorInfo() override;
+	virtual void InitializeDefaultAttributes() const override;
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Level")
 	int32 Level = 1;
 
-	float Again = 0.f;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "CategoryClassInfo")
+	ECharacterClass CharacterClass = ECharacterClass::Warrior;
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
+	float LifeSpan = 5.f;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UWidgetComponent> HealthBar;
