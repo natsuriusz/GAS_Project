@@ -13,6 +13,7 @@
 class UAbilitySystemComponent;
 class UAttributeSet;
 class UGameplayEffect;
+class UAnimMontage;
 
 UCLASS(Abstract)
 class AURA_API AAuraCharacterBase : public ACharacter, public IAbilitySystemInterface, public ICombatInterface
@@ -46,12 +47,17 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
-	
+
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
 	
 	void InitializePrimaryAttributes() const;
 	void InitializeSecondaryAttributes() const;
 	void InitializeVitalAttributes() const;
 
+	virtual void Die() override;
+
+	UFUNCTION(NetMulticast, Reliable)
+	virtual void MulticastHandleDeath();
 	virtual void AddCharacterAbilities();
 	void ApplyEffectToSelf(TSubclassOf<UGameplayEffect> GameplayEffectClass, float Level) const;
 	virtual void InitializeDefaultAttributes() const;
@@ -59,6 +65,9 @@ protected:
 private:
 	virtual void InitAbilityActorInfo();
 
+	UPROPERTY(EditAnywhere)
+	TObjectPtr<UAnimMontage> HitReactMontage;
+	
 	UPROPERTY(EditAnywhere, Category = "Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 };
