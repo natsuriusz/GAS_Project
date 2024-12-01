@@ -9,6 +9,8 @@
 #include "NiagaraValidationRule.h"
 #include "SWarningOrErrorBox.h"
 #include "Interaction/CombatInterface.h"
+#include "Kismet/GameplayStatics.h"
+#include "Player/AuraPlayerController.h"
 
 
 UAuraAttributeSet::UAuraAttributeSet()
@@ -179,7 +181,7 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		}
 		if (Props.SourceController)
 		{
-			ACharacter* SourceCharacter = Cast<ACharacter>(Props.SourceController->GetPawn());
+			Props.SourceCharacter = Cast<ACharacter>(Props.SourceController->GetPawn());
 		}
 	}
 	if (Data.Target.AbilityActorInfo.IsValid() && Data.Target.AbilityActorInfo->AvatarActor.IsValid())
@@ -190,6 +192,18 @@ void UAuraAttributeSet::SetEffectProperties(const FGameplayEffectModCallbackData
 		Props.TargetASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(Props.TargetAvatarActor);
 	}
 }
+
+void UAuraAttributeSet::ShowFloatingText(FEffectProperties& Props, float Damage) const
+{
+	if (Props.SourceCharacter != Props.TargetCharacter)
+	{
+		if(AAuraPlayerController* PC = Cast<AAuraPlayerController>(UGameplayStatics::GetPlayerController(Props.SourceCharacter, 0)))
+		{
+			PC->ShowDamageNumber(Damage, Props.TargetCharacter);
+		}
+	}
+}
+
 void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
@@ -209,6 +223,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	if (Data.EvaluatedData.Attribute == GetIncomingDamageAttribute())
 	{
 		const float LocalIncomingDamage = GetIncomingDamage();
+		SetIncomingDamage(0.f);
 		if (LocalIncomingDamage > 0.f)
 		{
 			const float NewHealth = GetHealth() - LocalIncomingDamage;
@@ -229,7 +244,9 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 					FGameplayTagContainer TagContainer;
 					TagContainer.AddTag(FAuraGameplayTags::Get().Effects_HitReact);
 					Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
+					UE_LOG(LogTemp, Warning, TEXT("%s Health Changed To %f"), *Props.TargetCharacter->GetName(), GetHealth());
 				}
+			ShowFloatingText(Props, LocalIncomingDamage);
 		}
 	}
 }
