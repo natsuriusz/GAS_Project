@@ -244,6 +244,7 @@ void UAuraAttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 					FGameplayTagContainer TagContainer;
 					TagContainer.AddTag(FAuraGameplayTags::Get().Effects_HitReact);
 					Props.TargetASC->TryActivateAbilitiesByTag(TagContainer);
+					UE_LOG(LogTemp, Warning, TEXT("%s Health Changed To %f"), *Props.TargetCharacter->GetName(), GetHealth());
 				}
 			ShowFloatingText(Props, LocalIncomingDamage);
 		}
