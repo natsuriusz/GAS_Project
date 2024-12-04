@@ -96,8 +96,17 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	FString("Damage to target")
 	);
 
+	
+	GameplayTags.Damage_Fire= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Damage.Fire"),
+	FString("Fire damage")
+	);
+
 	GameplayTags.Effects_HitReact= UGameplayTagsManager::Get().AddNativeGameplayTag(
 FName("Effects.HitReact"),
 FString("Granted this tag, actor will react to hit. If the damage wasn't done, this tag won't be granted")
 );
+
+	GameplayTags.DamageTypes.Add(GameplayTags.Damage_Fire);
+
 }
