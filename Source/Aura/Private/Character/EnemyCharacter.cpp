@@ -89,7 +89,10 @@ void AEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 	InitAbilityActorInfo();
 	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
-	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+	if (HasAuthority())
+	{
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);	
+	}
 
 	
 }
@@ -105,7 +108,10 @@ void AEnemyCharacter::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorSet();
-	InitializeDefaultAttributes();
+	if (HasAuthority())
+	{
+		InitializeDefaultAttributes();		
+	}
 }
 
 void AEnemyCharacter::InitializeDefaultAttributes() const

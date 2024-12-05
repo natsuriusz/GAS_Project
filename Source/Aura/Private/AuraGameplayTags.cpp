@@ -101,7 +101,79 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	FName("Damage.Fire"),
 	FString("Fire damage")
 	);
+	
+	GameplayTags.Damage_Lightning= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Damage.Lightning"),
+	FString("Lightning damage")
+	);
 
+	GameplayTags.Damage_Arcane= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Damage.Arcane"),
+	FString("Arcane damage")
+	);
+
+	GameplayTags.Damage_Physical= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Damage.Physical"),
+	FString("Physical damage")
+	);
+
+	GameplayTags.Damage_Water= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Damage.Water"),
+	FString("Water damage")
+	);
+
+	GameplayTags.Damage_Earth= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Damage.Earth"),
+	FString("Earth damage")
+	);
+
+
+	// Resistances
+
+	
+	GameplayTags.Resistance_Fire= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Attributes.Resistance.Fire"),
+	FString("Fire Resistance")
+	);
+	
+	GameplayTags.Resistance_Lightning= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Attributes.Resistance.Lightning"),
+	FString("Lightning Resistance")
+	);
+
+	GameplayTags.Resistance_Arcane= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Attributes.Resistance.Arcane"),
+	FString("Arcane Resistance")
+	);
+
+	GameplayTags.Resistance_Physical= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Attributes.Resistance.Physical"),
+	FString("Physical Resistance")
+	);
+
+	GameplayTags.Resistance_Water= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Attributes.Resistance.Water"),
+	FString("Water Resistance")
+	);
+
+	GameplayTags.Resistance_Earth= UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Attributes.Resistance.Earth"),
+	FString("Earth Resistance")
+	);
+
+
+	//Effects
+	// Map of damage types to resistances
+
+	GameplayTags.DamageToResistances.Add(GameplayTags.Damage_Arcane, GameplayTags.Resistance_Arcane);
+	GameplayTags.DamageToResistances.Add(GameplayTags.Damage_Fire, GameplayTags.Resistance_Fire);
+	GameplayTags.DamageToResistances.Add(GameplayTags.Damage_Lightning, GameplayTags.Resistance_Lightning);
+	GameplayTags.DamageToResistances.Add(GameplayTags.Damage_Water, GameplayTags.Resistance_Water);
+	GameplayTags.DamageToResistances.Add(GameplayTags.Damage_Earth, GameplayTags.Resistance_Earth);
+	GameplayTags.DamageToResistances.Add(GameplayTags.Damage_Physical, GameplayTags.Resistance_Physical);
+
+	
+//Hit React
 	GameplayTags.Effects_HitReact= UGameplayTagsManager::Get().AddNativeGameplayTag(
 FName("Effects.HitReact"),
 FString("Granted this tag, actor will react to hit. If the damage wasn't done, this tag won't be granted")
