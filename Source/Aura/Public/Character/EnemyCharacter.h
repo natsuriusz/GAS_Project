@@ -9,10 +9,13 @@
 #include "AbilitySystem/Data/CharacterClassInfo.h"
 #include "EnemyCharacter.generated.h"
 
+class AAuraAIController;
 /**
  * 
  */
 class UWidgetComponent;
+class AAuraAIController;
+class UBehaviorTree;
 UCLASS()
 class AURA_API AEnemyCharacter : public AAuraCharacterBase, public IEnemyInterface
 {
@@ -24,6 +27,8 @@ public:
 	virtual void UnHighlightActor() override;
 	virtual void Tick(float DeltaSeconds) override;
 	virtual int32 GetPlayerLevel() override;
+
+	virtual void PossessedBy(AController* NewController) override;
 
 	UPROPERTY(BlueprintAssignable)
 	FOnAttributeChangedSignature OnHealthChanged;
@@ -54,6 +59,13 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<UWidgetComponent> HealthBar;
+
+	UPROPERTY(EditAnywhere, Category = "AI")
+	TObjectPtr<UBehaviorTree> BehaviorTree;
+
+	UPROPERTY(VisibleAnywhere, Category = "AI")
+	TObjectPtr<AAuraAIController> AIController;
+	
 private:
 	
 };
