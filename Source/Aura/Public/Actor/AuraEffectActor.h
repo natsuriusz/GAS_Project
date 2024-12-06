@@ -46,8 +46,8 @@ protected:
 	UFUNCTION(BlueprintCallable, Category = "Applied Effect")
 	void OnEndOverlap(AActor* TargetActor);
 	
-	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Applied Effect")
-	bool bDestroyOnEffectRemoval = false;
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	bool bDestroyOnEffectApplication = false;
 	
 	//Instant Gameplay Effects
 	
@@ -80,6 +80,13 @@ protected:
 
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effect")
 	float Level = 1.f;
+
+
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Applied Effects")
+	bool bApplyEffectsToEnemies = false;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Applied Effects")
+	bool bDestroyOnEnemyOverlap = false;
 
 public:	
 	// Called every frame

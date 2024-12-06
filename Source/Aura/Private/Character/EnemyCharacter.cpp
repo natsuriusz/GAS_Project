@@ -6,7 +6,10 @@
 #include "AbilitySystem/AuraAbilitySystemLibrary.h"
 #include "AbilitySystem/AuraAttributeSet.h"
 #include "AuraGameplayTags.h"
+#include "AI/AuraAIController.h"
 #include "Aura/Aura.h"
+#include "BehaviorTree/BehaviorTree.h"
+#include "BehaviorTree/BlackboardComponent.h"
 #include "Components/WidgetComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "UI/Widgets/AuraUserWidget.h"
@@ -18,6 +21,11 @@ AEnemyCharacter::AEnemyCharacter()
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 	AttributeSet = CreateDefaultSubobject<UAuraAttributeSet>("AttributeSet");
+
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationRoll = false;
+	bUseControllerRotationYaw = false;
+	GetCharacterMovement()->bUseControllerDesiredRotation = true;
 	
 	HealthBar = CreateDefaultSubobject<UWidgetComponent>("HealthBar");
 	HealthBar->SetupAttachment(GetRootComponent());
@@ -76,12 +84,28 @@ int32 AEnemyCharacter::GetPlayerLevel()
 	return Level;
 }
 
+void AEnemyCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	AIController = Cast<AAuraAIController>(NewController);
+
+	if(!HasAuthority()) return;
+
+	AIController->RunBehaviorTree(BehaviorTree);
+	AIController->GetBlackboardComponent()->InitializeBlackboard(*BehaviorTree.Get()->BlackboardAsset);
+	AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), false);
+	AIController->GetBlackboardComponent()->SetValueAsBool(FName("RangedAttacker"), CharacterClass != ECharacterClass::Warrior);
+
+}
+
 void AEnemyCharacter::HitReactTagChanged(const FGameplayTag CallbackTag, int32 NewCount)
 {
 	bHitReacting = NewCount > 0;
 	
 	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0 : BaseWalkSpeed;
-	
+	AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), bHitReacting);
+
 }
 
 void AEnemyCharacter::BeginPlay()
@@ -89,7 +113,10 @@ void AEnemyCharacter::BeginPlay()
 	Super::BeginPlay();
 	InitAbilityActorInfo();
 	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
-	UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);
+	if (HasAuthority())
+	{
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);	
+	}
 
 	
 }
@@ -105,7 +132,10 @@ void AEnemyCharacter::InitAbilityActorInfo()
 {
 	AbilitySystemComponent->InitAbilityActorInfo(this, this);
 	Cast<UAuraAbilitySystemComponent>(AbilitySystemComponent)->AbilityActorSet();
-	InitializeDefaultAttributes();
+	if (HasAuthority())
+	{
+		InitializeDefaultAttributes();		
+	}
 }
 
 void AEnemyCharacter::InitializeDefaultAttributes() const
