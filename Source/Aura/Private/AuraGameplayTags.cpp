@@ -3,6 +3,7 @@
 
 #include "AuraGameplayTags.h"
 #include "GameplayTagsManager.h"
+#include "GameplayTagsSettings.h"
 FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 
 void FAuraGameplayTags::InitializeNativeGameplayTags()
@@ -171,6 +172,11 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	GameplayTags.DamageToResistances.Add(GameplayTags.Damage_Water, GameplayTags.Resistance_Water);
 	GameplayTags.DamageToResistances.Add(GameplayTags.Damage_Earth, GameplayTags.Resistance_Earth);
 	GameplayTags.DamageToResistances.Add(GameplayTags.Damage_Physical, GameplayTags.Resistance_Physical);
+
+	//Attack
+	GameplayTags.Abilities_Attack = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Abilities.Attack"), FString("Base attack tag"));
+	
 
 	
 //Hit React

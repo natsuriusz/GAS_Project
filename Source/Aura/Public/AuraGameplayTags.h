@@ -57,6 +57,9 @@ public:
  FGameplayTag Damage_Physical;
  FGameplayTag Damage_Water;
  FGameplayTag Damage_Earth;
+
+ //
+ FGameplayTag Abilities_Attack;
  
  //HitReacts
 FGameplayTag Effects_HitReact;
