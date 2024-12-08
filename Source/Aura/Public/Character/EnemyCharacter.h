@@ -28,6 +28,9 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	virtual int32 GetPlayerLevel() override;
 
+	virtual AActor* GetCombatTarget_Implementation() const override;
+	virtual void SetCombatTarget_Implementation(AActor* InCombatTarget) override;
+
 	virtual void PossessedBy(AController* NewController) override;
 
 	UPROPERTY(BlueprintAssignable)
@@ -65,7 +68,9 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, Category = "AI")
 	TObjectPtr<AAuraAIController> AIController;
-	
+
+	UPROPERTY(BLueprintReadWrite, Category = "Combat")
+	TObjectPtr<AActor> CombatTarget;
 private:
 	
 };

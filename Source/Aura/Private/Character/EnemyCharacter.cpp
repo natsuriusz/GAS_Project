@@ -84,6 +84,17 @@ int32 AEnemyCharacter::GetPlayerLevel()
 	return Level;
 }
 
+AActor* AEnemyCharacter::GetCombatTarget_Implementation() const
+{
+	if (!CombatTarget) return nullptr;
+	return CombatTarget;
+}
+
+void AEnemyCharacter::SetCombatTarget_Implementation(AActor* InCombatTarget)
+{
+	CombatTarget = InCombatTarget;
+}
+
 void AEnemyCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);

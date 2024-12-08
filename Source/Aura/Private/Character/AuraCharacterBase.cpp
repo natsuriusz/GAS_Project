@@ -34,6 +34,7 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+
 void AAuraCharacterBase::Dissolve()
 {
 	if (IsValid(Mesh_DissolveMaterialInstance))
