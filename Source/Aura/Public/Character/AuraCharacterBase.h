@@ -28,6 +28,8 @@ protected:
 
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+	virtual FVector GetCombatSocketLocation_Implementation() override;
 	
 	FORCEINLINE UAttributeSet* GetAttributeSet() const {return AttributeSet;};
 	

@@ -34,6 +34,13 @@ UAbilitySystemComponent* AAuraCharacterBase::GetAbilitySystemComponent() const
 	return AbilitySystemComponent;
 }
 
+FVector AAuraCharacterBase::GetCombatSocketLocation_Implementation()
+{
+
+		return Weapon->GetSocketLocation(FName("CombatSocket"));
+	
+}
+
 
 void AAuraCharacterBase::Dissolve()
 {
