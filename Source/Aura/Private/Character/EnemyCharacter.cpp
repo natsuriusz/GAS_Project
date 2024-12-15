@@ -84,6 +84,17 @@ int32 AEnemyCharacter::GetPlayerLevel()
 	return Level;
 }
 
+AActor* AEnemyCharacter::GetCombatTarget_Implementation() const
+{
+	if (!CombatTarget) return nullptr;
+	return CombatTarget;
+}
+
+void AEnemyCharacter::SetCombatTarget_Implementation(AActor* InCombatTarget)
+{
+	CombatTarget = InCombatTarget;
+}
+
 void AEnemyCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
@@ -104,7 +115,10 @@ void AEnemyCharacter::HitReactTagChanged(const FGameplayTag CallbackTag, int32 N
 	bHitReacting = NewCount > 0;
 	
 	GetCharacterMovement()->MaxWalkSpeed = bHitReacting ? 0 : BaseWalkSpeed;
-	AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), bHitReacting);
+	if (AIController && AIController->GetBlackboardComponent())
+	{
+		AIController->GetBlackboardComponent()->SetValueAsBool(FName("HitReacting"), bHitReacting);
+	}
 
 }
 
@@ -115,7 +129,7 @@ void AEnemyCharacter::BeginPlay()
 	GetCharacterMovement()->MaxWalkSpeed = BaseWalkSpeed;
 	if (HasAuthority())
 	{
-		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent);	
+		UAuraAbilitySystemLibrary::GiveStartupAbilities(this, AbilitySystemComponent, CharacterClass);	
 	}
 
 	
