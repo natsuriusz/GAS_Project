@@ -58,8 +58,12 @@ public:
  FGameplayTag Damage_Water;
  FGameplayTag Damage_Earth;
 
- //
+ //Attacks
  FGameplayTag Abilities_Attack;
+
+ FGameplayTag Montage_Attack_Weapon;
+ FGameplayTag Montage_Attack_RightHand;
+ FGameplayTag Montage_Attack_LeftHand;
  
  //HitReacts
 FGameplayTag Effects_HitReact;

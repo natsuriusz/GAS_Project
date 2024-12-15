@@ -29,12 +29,23 @@ protected:
 public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
-	virtual FVector GetCombatSocketLocation_Implementation() override;
+	virtual FVector GetCombatSocketLocation_Implementation(const FGameplayTag& MontageTag) override;
+
+	virtual UAnimMontage* GetHitReactMontage_Implementation() override;	
+	virtual void Die() override;	
+	virtual bool IsDead_Implementation() const override;
+	virtual AActor* GetAvatar_Implementation() override;
+	/** end Combat Interface */
 	
 	FORCEINLINE UAttributeSet* GetAttributeSet() const {return AttributeSet;};
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	TArray<FTaggedMontage> AttackMontages;
+	
+	virtual TArray<FTaggedMontage> GetCombatMontages_Implementation() override;
 	
 protected:
-	UPROPERTY(EditAnywhere, Category = "Combat")
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Combat")
 	TObjectPtr<USkeletalMeshComponent> Weapon;
 	UPROPERTY()
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
@@ -49,14 +60,23 @@ protected:
 
 	UPROPERTY(BlueprintReadWrite, EditAnywhere)
 	TSubclassOf<UGameplayEffect> DefaultVitalAttributes;
-
-	virtual UAnimMontage* GetHitReactMontage_Implementation() override;
+	
 	
 	void InitializePrimaryAttributes() const;
 	void InitializeSecondaryAttributes() const;
 	void InitializeVitalAttributes() const;
 
-	virtual void Die() override;
+	
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName WeaponTipSocketName;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName LeftHandSocketName;
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	FName RightHandSocketName;
+
+	bool bDead = false;
+
 
 	UFUNCTION(NetMulticast, Reliable)
 	virtual void MulticastHandleDeath();

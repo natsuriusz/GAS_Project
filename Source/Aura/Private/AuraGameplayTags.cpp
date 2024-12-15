@@ -3,7 +3,6 @@
 
 #include "AuraGameplayTags.h"
 #include "GameplayTagsManager.h"
-#include "GameplayTagsSettings.h"
 FAuraGameplayTags FAuraGameplayTags::GameplayTags;
 
 void FAuraGameplayTags::InitializeNativeGameplayTags()
@@ -176,6 +175,20 @@ void FAuraGameplayTags::InitializeNativeGameplayTags()
 	//Attack
 	GameplayTags.Abilities_Attack = UGameplayTagsManager::Get().AddNativeGameplayTag(
 		FName("Abilities.Attack"), FString("Base attack tag"));
+
+	GameplayTags.Montage_Attack_Weapon = UGameplayTagsManager::Get().AddNativeGameplayTag(
+	FName("Montage.Attack.Weapon"),
+	FString("Weapon")
+	);
+	GameplayTags.Montage_Attack_RightHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.RightHand"),
+		FString("Right Hand")
+		);
+	
+	GameplayTags.Montage_Attack_LeftHand = UGameplayTagsManager::Get().AddNativeGameplayTag(
+		FName("Montage.Attack.LeftHand"),
+		FString("Left Hand")
+		);
 	
 
 	
