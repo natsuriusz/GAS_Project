@@ -20,6 +20,8 @@ class AURA_API AAuraProjectile : public AActor
 public:	
 
 	AAuraProjectile();
+
+	AActor* OwnerActor;
 	
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<UProjectileMovementComponent> ProjectileMovement;
@@ -40,6 +42,8 @@ private:
 	float LifeSpan = 15.f;
 	
 	bool bHit = false;
+
+	
 
 	virtual void Destroyed() override;
 	

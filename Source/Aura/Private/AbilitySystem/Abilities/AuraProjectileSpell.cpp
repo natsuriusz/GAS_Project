@@ -48,7 +48,7 @@ void UAuraProjectileSpell::SpawnProjectile(const FVector& ProjectileTargetLocati
 			const float AppliedDamage = Pair.Value.GetValueAtLevel(GetAbilityLevel());
 			UAbilitySystemBlueprintLibrary::AssignTagSetByCallerMagnitude(SpecHandle, Pair.Key, AppliedDamage);
 		}
-		
+		Projectile->OwnerActor = GetAvatarActorFromActorInfo();
 		Projectile->FinishSpawning(SpawnTransform);
 	}
 }
