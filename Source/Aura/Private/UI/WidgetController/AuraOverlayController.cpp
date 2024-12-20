@@ -6,7 +6,6 @@
 #include "AbilitySystemComponent.h"
 #include "AbilitySystem/AuraAbilitySystemComponent.h"
 #include "AbilitySystem/AuraAttributeSet.h"
-#include "Animation/AnimAttributes.h"
 
 void UAuraOverlayController::BroadcastInitialValues()
 {

@@ -47,6 +47,7 @@ void AAuraHUD::InitOverlay(APlayerController* PC, APlayerState* APS, UAbilitySys
 
 	const FWidgetControllerParams WidgetControllerParams(PC, APS, ASC, ATS);
 	UAuraOverlayController* WidgetController = GetOverlayController(WidgetControllerParams);
+	checkf(WidgetController, TEXT("Failed to retrieve or create Overlay Widget Controller."));
 	OverlayWidget->SetWidgetController(WidgetController);
 	WidgetController->BroadcastInitialValues();
 	
